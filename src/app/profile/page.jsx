@@ -4,7 +4,7 @@ import AvatarsSelector from "@/Components/AvatarsSelector";
 import AvatarContext from "@/Context/AvatarContext";
 import Link from "next/link";
 
-export default function page() {
+export default function Page() {
   const { profile, setProfile } = useContext(AvatarContext);
   const inputRef = useRef();
 

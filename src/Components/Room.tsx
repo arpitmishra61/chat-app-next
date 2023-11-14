@@ -5,10 +5,6 @@ import React, { useEffect, useRef, useState, useContext } from "react";
 import { io } from "socket.io-client";
 import RenderMessages from "./RenderMessages";
 import AvatarContext from "@/Context/AvatarContext";
-import Image from "next/image";
-import { transform } from "next/dist/build/swc";
-const btnClasses =
-  "text-white bg-purple-700 hover:bg-purple-100 font-medium  text-md px-5 py-2.5 me-2";
 
 export default function Room() {
   const { profile } = useContext(AvatarContext);
@@ -30,7 +26,7 @@ export default function Room() {
   const [messages, setMessages] = useState([]);
   let socketRef: any = useRef("");
   useEffect(() => {
-    socketRef.current = io("http://localhost:8000");
+    socketRef.current = io(`${process.env.backendUrl}`);
     socketRef.current.emit("join-room", roomId, () => {
       console.log("JOINED!!!");
     });

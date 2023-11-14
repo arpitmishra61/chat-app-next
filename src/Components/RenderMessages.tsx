@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function RenderMessages({ messages, userId }) {
   return (
     <div className="p-4">
-      {messages.map((message) => {
+      {messages.map((message, i) => {
         console.log("message.id === userId", message.id, userId);
         const flexJustify = message.id === userId ? "msg-end" : "msg-start";
         const bg = message.id === userId ? "white" : "purple";
@@ -12,7 +12,7 @@ export default function RenderMessages({ messages, userId }) {
         console.log("bg", bg);
         const text = message.id === userId ? "black" : "white";
         return (
-          <div className={`flex ${flexJustify}`}>
+          <div className={`flex ${flexJustify}`} key={i}>
             <div
               className={`bg-${bg}-600 text-${text} p-3 my-4 rounded message relative`}
             >
