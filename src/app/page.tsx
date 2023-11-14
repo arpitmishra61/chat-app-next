@@ -1,7 +1,7 @@
 import Image from "next/image";
 import VideoSVG from "images/homepage/video-call-home-logo.svg";
-import UpdateProfileButton from "@/components/UpdateProfileButton";
-import JoinRoomButton from "@/components/JoinRoomButton";
+import UpdateProfileButton from "@/Components/UpdateProfileButton";
+import JoinRoomButton from "@/Components/JoinRoomButton";
 
 export default function Home() {
   return (
