@@ -26,8 +26,8 @@ export default function Room() {
   const [messages, setMessages] = useState([]);
   let socketRef: any = useRef("");
   useEffect(() => {
-    socketRef.current = io(`${process.env.backendUrl}`);
-    console.log("process.env.backendUrl", process.env.backendUrl);
+    socketRef.current = io(`https://chat-application-be.onrender.com`);
+    console.log("process.env.backendUrl");
     socketRef.current.emit("join-room", roomId, () => {
       console.log("JOINED!!!");
     });
