@@ -27,6 +27,7 @@ export default function Room() {
   let socketRef: any = useRef("");
   useEffect(() => {
     socketRef.current = io(`${process.env.backendUrl}`);
+    console.log("process.env.backendUrl", process.env.backendUrl);
     socketRef.current.emit("join-room", roomId, () => {
       console.log("JOINED!!!");
     });
