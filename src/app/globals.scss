@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+body {
+ 
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+.chat-screen {
+  max-height: 88vh;
+  height: 88vh;
+  padding-left: 80px;
+  padding-right: 80px;
+  letter-spacing: 3px;
+  word-spacing: 10px;
+  font-size: 22px;
+  overflow-y: scroll;
+  background-color: rgba(0, 0, 0, 0.088);
+  
+
+  padding-bottom: 60px;
+
+  
+}
+body {
+  overflow-x: hidden;
+}
+
+.room textarea {
+
+  padding: 20px;
+  outline: none;
+  border: 3px rgb(233, 231, 231) solid;
+  box-shadow: 5px 2px 3px 5px rgb(225, 225, 225);
+  overflow-y: hidden;
+ font-size: 22px;
+  width: 92%;
+  word-spacing: 0.5em;
+  letter-spacing: 0.23em;
+  box-sizing: border-box;
+  word-break: break-all;
+  line-break: auto;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.input-box {
+  height: 12vh;
+  position: absolute;
+  top:-50px;
+  
+ 
+  
+ 
+}
+.message {
+  box-shadow:2px 5px 10px 2px rgb(195, 150, 210);
+  max-width: 30%;
+  padding-right: 40px;
+  word-break: break-all;
+}
+.message .avatar {
+  margin-bottom: -10px;
+  
+  
+}
+.msg-end {
+  justify-content: end;
+
+}
+
+.msg-end .message {
+  background-color: white;
+ 
+}
+.msg-start {
+  justify-content: start;
+}
+
+
+.profile-page .content {
+  width: 80%;
+}
+.avatar-select {
+  cursor: pointer;
+  
+}
+
+.avatar-select:hover {
+  box-shadow:2px 5px 10px 12px rgb(195, 150, 210);
+  border-radius: 50%;
+}
+.avatar-container[data-selected="true"]::before{
+content :url('./../images/avatars/correct.png');
+display: inline-block;
+position: absolute;
+
+}
+.home .container {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  overflow-y: scroll;
+  border-radius: 30px;
+}
+
+
+
+.home .content {
+  background-color: rgba(255, 255, 255, 0);
+  border: 10px solid rgb(126, 34, 206);
+  border-right: none;
+  border-left: none;
+  width: 45%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.profile {
+  height: 100%;
+}
+
+.profile input {
+  background-color: rgba(52, 52, 52, 0.135);
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  letter-spacing: 0.2em;
+}
+.home-img {
+  width: 55%;
+  background-image: url('https://img.freepik.com/free-photo/white-simple-textured-design-background_53876-106174.jpg?w=996&t=st=1699971138~exp=1699971738~hmac=edf245ad41a3a51a9a276c19b96e168401538b95a374edb209848bf088db74d8');
+}
+
+.screen-image {
+  position: relative;
+}
+.screen-custom {
+  width: 370px;
+  height: 211px;
+  position: absolute;
+  top:0;
+  margin-top: 60px;
+  left: 22%;
+  background-color: rgba(255, 255, 255, 0.979);
+
+}
+.screen-custom h3 {
+  font-size: 22px;
+  letter-spacing: 0.2em;
+}
+
+input:focus {
+  border: none;
+  outline: none;
+}
+@media screen and (max-width:700px) {
+  .room {
+   width: 100%;
+   background-color: rgba(0, 0, 0, 0.088);
+    .chat-screen {
+  padding: 0;   
+  max-height: 88vh;
+  height: 88vh;
+  max-height: 88vh;
+  background-color: transparent;
+
+  }
+
+  .input-box {
+    height: 12vh;
+    width: 100%;
+    position: static;
+  }
+  .message {
+    max-width: 80%;
+    letter-spacing:2px;
+  
+  }
+  }
+  
+ 
+  
+}

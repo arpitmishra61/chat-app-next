@@ -14,7 +14,7 @@ export default function RenderMessages({ messages, userId }) {
         return (
           <div className={`flex ${flexJustify}`} key={i}>
             <div
-              className={`bg-${bg}-600 text-${text} p-3 my-4 rounded message relative`}
+              className={`bg-${bg}-700 text-${text} p-3 my-4 rounded message relative`}
             >
               <p className={`text-${nameText}-800 text-med mb-3`}>
                 <strong>{message.name}</strong>

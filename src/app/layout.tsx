@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
 import AvatarProvider from "@/Provider/AvatarProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,9 +19,9 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-          href="https://fonts.googleapis.com/css2?family=Skranji:wght@400;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500&family=Skranji:wght@400;700&display=swap"
           rel="stylesheet"
         />
       </head>

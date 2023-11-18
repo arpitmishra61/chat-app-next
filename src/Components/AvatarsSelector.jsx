@@ -12,7 +12,7 @@ const getAvatars = (profile, setProfile) => {
       >
         <Image
           src={require(`images/avatars/avatar-${i}.png`)}
-          width={100}
+          width={80}
           height={100}
           className="avatar-select"
           onClick={() => {
@@ -29,11 +29,10 @@ const getAvatars = (profile, setProfile) => {
 };
 export default function AvatarsSelector() {
   const { profile, setProfile } = useContext(AvatarContext);
-  console.log("profile", profile);
   return (
-    <div className="mt-4" p-4>
-      <h3 className="text-2xl">Select Avatar</h3>
-      <div className="flex justify-between w-2/3 mt-6 p-4 mb-4">
+    <div className="mt-12">
+      <h3 className="text-2xl">Select Your Avatar</h3>
+      <div className="flex justify-between w-100 mt-1 p-5 mb-4 flex-wrap">
         {getAvatars(profile, setProfile)}
       </div>
     </div>

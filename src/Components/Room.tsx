@@ -32,23 +32,41 @@ export default function Room() {
       console.log("JOINED!!!");
     });
     socketRef.current.on("receive-message", (message) => {
-      console.log("message", message);
       setMessages((messages) => [...messages, message]);
     });
     messageRef.current.addEventListener("keypress", (e) => {
       let blockSend = false;
+
       if (e.shiftKey) {
         blockSend = true;
       }
       if (e.key === "Enter" && !e.shiftKey) {
         if (!blockSend) {
           sendMessage();
+
           blockSend = false;
           messageRef.current.value = "";
         }
       }
     });
   }, []);
+
+  useEffect(() => {
+    if (messages?.length) {
+      const chatScreen: any = document.querySelector(".chat-screen");
+
+      const paddingBottom = window
+        .getComputedStyle(chatScreen, null)
+        .getPropertyValue("padding-bottom");
+      console.log(paddingBottom);
+      console.log(chatScreen.scrollHeight);
+      console.log(+paddingBottom?.replace("px", ""), chatScreen.scrollHeight);
+      chatScreen.scrollTo(
+        0,
+        chatScreen.scrollHeight + +paddingBottom?.replace("px", "")
+      );
+    }
+  }, [messages]);
   return (
     <div className="room w-4/5 m-auto">
       <div className="chat-screen">
@@ -61,22 +79,6 @@ export default function Room() {
             placeholder="Type your message.."
             ref={messageRef}
           />
-          {/* <Image
-            src={require("images/avatars/send-message-icon.png")}
-            onClick={() => {
-              sendMessage();
-            }}
-            style={{
-              height: "64px",
-              position: "absolute",
-              right: "-30px",
-              top: "25%",
-              cursor: "pointer",
-            }}
-            width={64}
-            height={64}
-            alt="arrow"
-          /> */}
         </div>
       </div>
     </div>
