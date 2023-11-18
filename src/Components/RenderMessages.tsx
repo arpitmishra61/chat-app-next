@@ -2,9 +2,18 @@
 import React from "react";
 import Image from "next/image";
 export default function RenderMessages({ messages, userId }) {
-  return (
+  return !messages?.length ? (
+    <div
+      className="flex items-center justify-center"
+      style={{ height: "100%" }}
+    >
+      {" "}
+      <h3>Your Conversation</h3>
+    </div>
+  ) : (
     <div className="p-4">
       {messages.map((message, i) => {
+        console.log(message.text);
         console.log("message.id === userId", message.id, userId);
         const flexJustify = message.id === userId ? "msg-end" : "msg-start";
         const bg = message.id === userId ? "white" : "purple";
@@ -16,7 +25,7 @@ export default function RenderMessages({ messages, userId }) {
             <div
               className={`bg-${bg}-700 text-${text} p-3 my-4 rounded message relative`}
             >
-              <p className={`text-${nameText}-800 text-med mb-3`}>
+              <p className={`text-${nameText}-800 text-med mb-1`}>
                 <strong>{message.name}</strong>
               </p>
 

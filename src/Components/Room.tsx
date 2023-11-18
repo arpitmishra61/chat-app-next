@@ -11,6 +11,7 @@ export default function Room() {
 
   const sendMessage = () => {
     const text = messageRef.current?.value;
+    console.log(text);
     const message = {
       text,
       id: socketRef.current.id,
@@ -42,10 +43,10 @@ export default function Room() {
       }
       if (e.key === "Enter" && !e.shiftKey) {
         if (!blockSend) {
+          e.preventDefault();
           sendMessage();
 
           blockSend = false;
-          messageRef.current.value = "";
         }
       }
     });
@@ -65,6 +66,7 @@ export default function Room() {
         0,
         chatScreen.scrollHeight + +paddingBottom?.replace("px", "")
       );
+      messageRef.current.value = "";
     }
   }, [messages]);
   return (
@@ -73,12 +75,28 @@ export default function Room() {
         <RenderMessages messages={messages} userId={socketRef.current.id} />
       </div>
       <div className="relative justify-center flex ">
-        <div className="input-box flex align-center w-11/12 relative">
+        <div className="input-box flex align-center relative">
           <textarea
-            className=" flex-auto"
             placeholder="Type your message.."
             ref={messageRef}
-          />
+            rows={1}
+            cols={1}
+          ></textarea>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            onClick={sendMessage}
+          >
+            <path
+              d="M7 11L12 6L17 11M12 18V7"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
         </div>
       </div>
     </div>

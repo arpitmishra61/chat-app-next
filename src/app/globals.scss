@@ -34,34 +34,48 @@ body {
   outline: none;
   border: 3px rgb(233, 231, 231) solid;
   box-shadow: 5px 2px 3px 5px rgb(225, 225, 225);
-  overflow-y: hidden;
  font-size: 22px;
   width: 92%;
   word-spacing: 0.5em;
   letter-spacing: 0.23em;
   box-sizing: border-box;
-  word-break: break-all;
   line-break: auto;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+  width: 100%;
+ 
 }
 
 .input-box {
-  height: 12vh;
+  min-height: 12vh;
   position: absolute;
   top:-50px;
+  width: 90%;
   
- 
+ svg {
+  position: absolute;
+  z-index: 1;
+  top:0;
+  color :white;
+  right: 10px;
+  top:50%;
+  transform: translate(0, -50%);
+  background-color: rgba(126, 34, 206, 0.881);
+  border-radius: 10px;
+ &:hover {
+  background-color: rgba(126, 34, 206, 0.745); ;
+ }
+ }
   
  
 }
 .message {
   box-shadow:2px 5px 10px 2px rgb(195, 150, 210);
-  max-width: 30%;
-  padding-right: 40px;
-  word-break: break-all;
+  max-width: 50%;
+  padding-right: 35px;
+  font-size: 17px;
 }
 .message .avatar {
   margin-bottom: -10px;
@@ -71,6 +85,9 @@ body {
 .msg-end {
   justify-content: end;
 
+}
+.avatar {
+  width: 22px;
 }
 
 .msg-end .message {
@@ -154,31 +171,73 @@ input:focus {
   border: none;
   outline: none;
 }
-@media screen and (max-width:1024px) {
+p {
+ white-space:pre-wrap;
+}
+
+@media screen and (max-width:512px) {
   .room {
    width: 100%;
    background-color: rgba(0, 0, 0, 0.088);
+   border-radius: 0;
     .chat-screen {
   padding: 0;   
   max-height: 88vh;
   height: 88vh;
   max-height: 88vh;
   background-color: transparent;
-
   }
 
   .input-box {
     height: 12vh;
     width: 100%;
     position: static;
+    top:0;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    background-color: purple;
+
+
+
+    textarea {
+      border-radius: 0;
+      padding: 10px;
+      letter-spacing: 3px;
+      word-spacing: 5px;
+      box-shadow: none;
+      width: 100%;
+      font-size: 16px;
+      padding-right: 35px;
+     
+    }
+  
   }
   .message {
-    max-width: 80%;
+    max-width: 90%;
     letter-spacing:2px;
+    box-shadow: none;
   
   }
   }
   
  
   
+}
+
+div {
+  box-sizing: border-box;
+}
+
+@media screen and (max-height:450px){
+  .room {
+  .chat-screen {
+    height: 80vh;
+  }
+    .input-box {
+      height: 20vh;
+    
+  }
+  
+}
 }
