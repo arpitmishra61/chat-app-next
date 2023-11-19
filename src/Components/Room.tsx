@@ -105,7 +105,8 @@ export default function Room() {
         0,
         chatScreen.scrollHeight + +paddingBottom?.replace("px", "")
       );
-      messageRef.current.value = "";
+      if (messages[messages.length - 1].id === socketRef.current.id)
+        messageRef.current.value = "";
     }
   }, [messages]);
   return (
