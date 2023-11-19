@@ -16,7 +16,7 @@ export default function Room() {
       fileReader.readAsDataURL(files);
       fileReader.addEventListener("load", function () {
         setfilePreview({
-          url: this.result,
+          url: String(this.result),
         });
       });
     }
@@ -72,10 +72,11 @@ export default function Room() {
       setMessages((messages) => [...messages, message]);
     });
     socketRef.current.on("typing-event", (data) => {
+      console.log("typing on");
       setTyping(data);
     });
 
-    messageRef.current.addEventListener("keypress", (e) => {
+    messageRef.current.addEventListener("keydown", (e) => {
       const message = {
         id: socketRef.current.id,
         name: profile?.name,
@@ -85,8 +86,10 @@ export default function Room() {
       if (Date.now() - timeStamp > 2500) {
         socketRef.current.emit("not-typing", message, roomId);
       }
+      console.log("typing click");
       if (Date.now() - timeStamp < 1500) {
         socketRef.current.emit("typing", message, roomId);
+        console.log("typing emmit");
       }
 
       timeStamp = Date.now();
