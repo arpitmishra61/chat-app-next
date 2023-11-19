@@ -8,29 +8,37 @@ import AvatarContext from "@/Context/AvatarContext";
 
 export default function Room() {
   const { profile } = useContext(AvatarContext);
+  let timeStamp = 0;
 
   const sendMessage = () => {
     const text = messageRef.current?.value;
-    console.log(text);
     const message = {
       text,
       id: socketRef.current.id,
       name: profile?.name,
       profileUrl: profile?.profileUrl,
     };
+    let typeMessage = {
+      id: socketRef.current.id,
+      name: profile?.name,
+      profileUrl: profile?.profileUrl,
+      value: false,
+    };
+
     socketRef.current.emit("message", message, roomId);
     setMessages((messages) => [...messages, message]);
     messageRef.current.focus();
+    socketRef.current.emit("not-typing", typeMessage, roomId);
   };
 
   const { roomId } = useParams();
   const messageRef: any = useRef("");
   const [messages, setMessages] = useState([]);
+  const [typing, setTyping] = useState(false);
   let socketRef: any = useRef("");
   useEffect(() => {
     window.onresize = () => {
       var metaViewport = document.querySelector("meta[name=viewport]");
-      console.log("grgr");
       metaViewport.removeAttribute("content");
       metaViewport.setAttribute(
         "content",
@@ -38,16 +46,37 @@ export default function Room() {
       );
     };
     socketRef.current = io(`https://chat-application-be.onrender.com`);
-    console.log("process.env.backendUrl");
     socketRef.current.emit("join-room", roomId, () => {
       console.log("JOINED!!!");
     });
     socketRef.current.on("receive-message", (message) => {
       setMessages((messages) => [...messages, message]);
     });
-    messageRef.current.addEventListener("keypress", (e) => {
-      let blockSend = false;
+    socketRef.current.on("typing-event", (data) => {
+      console.log("data", data);
+      setTyping(data);
+    });
 
+    messageRef.current.addEventListener("keypress", (e) => {
+      const message = {
+        id: socketRef.current.id,
+        name: profile?.name,
+        profileUrl: profile?.profileUrl,
+      };
+      let blockSend = false;
+      if (Date.now() - timeStamp > 2500) {
+        socketRef.current.emit("not-typing", message, roomId);
+      }
+      if (Date.now() - timeStamp < 1500) {
+        socketRef.current.emit("typing", message, roomId);
+      }
+
+      timeStamp = Date.now();
+      setTimeout(() => {
+        if (Date.now() - timeStamp > 2000) {
+          socketRef.current.emit("not-typing", message, roomId);
+        }
+      }, 2000);
       if (e.shiftKey) {
         blockSend = true;
       }
@@ -82,7 +111,11 @@ export default function Room() {
   return (
     <div className="room w-4/5 m-auto">
       <div className="chat-screen">
-        <RenderMessages messages={messages} userId={socketRef.current.id} />
+        <RenderMessages
+          messages={messages}
+          userId={socketRef.current.id}
+          typing={typing}
+        />
       </div>
       <div className="relative justify-center flex ">
         <div className="input-box flex align-center relative">
