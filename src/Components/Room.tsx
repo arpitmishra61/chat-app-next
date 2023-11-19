@@ -20,6 +20,7 @@ export default function Room() {
     };
     socketRef.current.emit("message", message, roomId);
     setMessages((messages) => [...messages, message]);
+    messageRef.current.focus();
   };
 
   const { roomId } = useParams();
@@ -27,6 +28,15 @@ export default function Room() {
   const [messages, setMessages] = useState([]);
   let socketRef: any = useRef("");
   useEffect(() => {
+    window.onresize = () => {
+      var metaViewport = document.querySelector("meta[name=viewport]");
+      console.log("grgr");
+      metaViewport.removeAttribute("content");
+      metaViewport.setAttribute(
+        "content",
+        "width=device-width, initial-scale=1.0, interactive-widget=resizes-content"
+      );
+    };
     socketRef.current = io(`https://chat-application-be.onrender.com`);
     console.log("process.env.backendUrl");
     socketRef.current.emit("join-room", roomId, () => {
