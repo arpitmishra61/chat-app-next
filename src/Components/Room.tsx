@@ -5,8 +5,23 @@ import React, { useEffect, useRef, useState, useContext } from "react";
 import { io } from "socket.io-client";
 import RenderMessages from "./RenderMessages";
 import AvatarContext from "@/Context/AvatarContext";
+import FilePreview from "./FilePreview";
+import Image from "next/image";
 
 export default function Room() {
+  function getImgData() {
+    const files = fileRef.current.files[0];
+    if (files) {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(files);
+      fileReader.addEventListener("load", function () {
+        setfilePreview({
+          url: this.result,
+        });
+      });
+    }
+  }
+
   const { profile } = useContext(AvatarContext);
   let timeStamp = 0;
 
@@ -17,6 +32,7 @@ export default function Room() {
       id: socketRef.current.id,
       name: profile?.name,
       profileUrl: profile?.profileUrl,
+      imageUrl: filePreview.url,
     };
     let typeMessage = {
       id: socketRef.current.id,
@@ -29,11 +45,14 @@ export default function Room() {
     setMessages((messages) => [...messages, message]);
     messageRef.current.focus();
     socketRef.current.emit("not-typing", typeMessage, roomId);
+    setfilePreview({ url: "" });
   };
 
   const { roomId } = useParams();
   const messageRef: any = useRef("");
+  const fileRef: any = useRef("");
   const [messages, setMessages] = useState([]);
+  const [filePreview, setfilePreview] = useState({ url: "" });
   const [typing, setTyping] = useState(false);
   let socketRef: any = useRef("");
   useEffect(() => {
@@ -53,7 +72,6 @@ export default function Room() {
       setMessages((messages) => [...messages, message]);
     });
     socketRef.current.on("typing-event", (data) => {
-      console.log("data", data);
       setTyping(data);
     });
 
@@ -84,7 +102,6 @@ export default function Room() {
         if (!blockSend) {
           e.preventDefault();
           sendMessage();
-
           blockSend = false;
         }
       }
@@ -98,9 +115,6 @@ export default function Room() {
       const paddingBottom = window
         .getComputedStyle(chatScreen, null)
         .getPropertyValue("padding-bottom");
-      console.log(paddingBottom);
-      console.log(chatScreen.scrollHeight);
-      console.log(+paddingBottom?.replace("px", ""), chatScreen.scrollHeight);
       chatScreen.scrollTo(
         0,
         chatScreen.scrollHeight + +paddingBottom?.replace("px", "")
@@ -112,11 +126,14 @@ export default function Room() {
   return (
     <div className="room w-4/5 m-auto">
       <div className="chat-screen">
-        <RenderMessages
-          messages={messages}
-          userId={socketRef.current.id}
-          typing={typing}
-        />
+        {Boolean(filePreview?.url) && <FilePreview filePreview={filePreview} />}
+        {!Boolean(filePreview.url) && (
+          <RenderMessages
+            messages={messages}
+            userId={socketRef.current.id}
+            typing={typing}
+          />
+        )}
       </div>
       <div className="relative justify-center flex ">
         <div className="input-box flex align-center relative">
@@ -126,21 +143,43 @@ export default function Room() {
             rows={1}
             cols={1}
           ></textarea>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            onClick={sendMessage}
-          >
-            <path
-              d="M7 11L12 6L17 11M12 18V7"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
-          </svg>
+          <div className="icon-box flex justify-between items-center">
+            <input
+              type="file"
+              className="hidden"
+              ref={fileRef}
+              accept="image/*"
+              onChange={() => {
+                getImgData();
+              }}
+            />
+            <Image
+              src={require(`images/avatars/send-file.png`)}
+              alt="file"
+              width={32}
+              height={32}
+              className="file-icon"
+              onClick={() => {
+                const file = fileRef.current;
+                file.click();
+              }}
+            />
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              onClick={sendMessage}
+            >
+              <path
+                d="M7 11L12 6L17 11M12 18V7"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+          </div>
         </div>
       </div>
     </div>

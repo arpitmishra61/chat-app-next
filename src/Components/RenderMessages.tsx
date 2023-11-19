@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 export default function RenderMessages({ messages, userId, typing }) {
   console.log(typing);
+
   return !messages?.length ? (
     <div
       className="flex items-center justify-center"
@@ -35,6 +36,15 @@ export default function RenderMessages({ messages, userId, typing }) {
                 alt="image"
                 className="absolute bottom-0 right-0 avatar"
               />
+              {message.imageUrl ? (
+                <Image
+                  src={message.imageUrl}
+                  width={200}
+                  height={200}
+                  alt="image"
+                  className=""
+                />
+              ) : null}
 
               <p>{message.text}</p>
             </div>

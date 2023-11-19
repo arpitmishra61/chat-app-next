@@ -8,7 +8,7 @@
   padding-left: 80px;
   padding-right: 80px;
   letter-spacing: 3px;
-  word-spacing: 10px;
+  word-spacing: 1px;
   font-size: 22px;
   overflow-y: scroll;
   background-color: rgba(0, 0, 0, 0.088);
@@ -17,6 +17,28 @@
   padding-bottom: 60px;
 
   
+}
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.file-preview {
+background: rgba(255, 255, 255, 0.171);
+overflow-y: hidden;
+box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+height: 75vh;
+margin-top: 20px;
+
+margin: auto;
+
+  img {
+    width:min-content;
+   
+    object-fit:fill;
+   
+    border-radius: 20px;
+  }
 }
 body {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -33,8 +55,8 @@ body {
   box-shadow: 5px 2px 3px 5px rgb(225, 225, 225);
  font-size: 22px;
   width: 92%;
-  word-spacing: 0.5em;
-  letter-spacing: 0.23em;
+  word-spacing: 0.1em;
+  letter-spacing: 0.1em;
   box-sizing: border-box;
   line-break: auto;
   border-top-left-radius: 20px;
@@ -42,6 +64,7 @@ body {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   width: 100%;
+  padding-right: 60px;
  
 }
 
@@ -50,29 +73,34 @@ body {
   position: absolute;
   top:-50px;
   width: 90%;
-  
- svg {
+.icon-box {
   position: absolute;
   z-index: 1;
   top:0;
-  color :white;
   right: 10px;
   top:50%;
   transform: translate(0, -50%);
+ svg {
+  color :white;
   background-color: rgba(126, 34, 206, 0.881);
   border-radius: 10px;
  &:hover {
   background-color: rgba(126, 34, 206, 0.745); ;
  }
  }
+
   
  
+}
 }
 .message {
   box-shadow:2px 5px 10px 2px rgb(195, 150, 210);
   max-width: 50%;
-  padding-right: 35px;
+ 
   font-size: 17px;
+  img {
+    border-radius: 10px;
+  }
 }
 .message .avatar {
   margin-bottom: -10px;
@@ -172,6 +200,7 @@ p {
  white-space:pre-wrap;
 }
 
+
 @media screen and (max-width:512px) {
   .room {
    width: 100%;
@@ -199,19 +228,19 @@ p {
     textarea {
       border-radius: 0;
       padding: 10px;
-      letter-spacing: 3px;
-      word-spacing: 5px;
+      letter-spacing: 2px;
+      word-spacing: 1px;
       box-shadow: none;
       width: 100%;
       font-size: 16px;
-      padding-right: 35px;
+      padding-right: 48px;
      
     }
   
   }
   .message {
     max-width: 90%;
-    letter-spacing:2px;
+    letter-spacing:1px;
     box-shadow: none;
   
   }
