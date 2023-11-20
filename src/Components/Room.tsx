@@ -7,13 +7,20 @@ import RenderMessages from "./RenderMessages";
 import AvatarContext from "@/Context/AvatarContext";
 import FilePreview from "./FilePreview";
 import Image from "next/image";
+import imageCompression from "browser-image-compression";
 
 export default function Room() {
-  function getImgData() {
+  async function getImgData() {
     const files = fileRef.current.files[0];
     if (files) {
       const fileReader = new FileReader();
-      fileReader.readAsDataURL(files);
+      const options = {
+        maxSizeMB: 0.4,
+        maxWidthOrHeight: 1024,
+        useWebWorker: true,
+      };
+      const compressedFile = await imageCompression(files, options);
+      fileReader.readAsDataURL(compressedFile);
       fileReader.addEventListener("load", function () {
         setfilePreview({
           url: String(this.result),
