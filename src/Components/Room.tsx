@@ -71,7 +71,7 @@ export default function Room() {
         "width=device-width, initial-scale=1.0, interactive-widget=resizes-content"
       );
     };
-    socketRef.current = io(`localhost:8000`);
+    socketRef.current = io(`https://chat-application-be.onrender.com`);
     const dataJoin = {
       id: socketRef.current.id,
       name: profile?.name,
