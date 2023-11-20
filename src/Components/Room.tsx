@@ -41,7 +41,7 @@ export default function Room() {
       profileUrl: profile?.profileUrl,
       imageUrl: filePreview.url,
     };
-    let typeMessage = {
+    const typeMessage = {
       id: socketRef.current.id,
       name: profile?.name,
       profileUrl: profile?.profileUrl,
@@ -71,15 +71,20 @@ export default function Room() {
         "width=device-width, initial-scale=1.0, interactive-widget=resizes-content"
       );
     };
-    socketRef.current = io(`https://chat-application-be.onrender.com`);
-    socketRef.current.emit("join-room", roomId, () => {
-      console.log("JOINED!!!");
-    });
+    socketRef.current = io(`localhost:8000`);
+    const dataJoin = {
+      id: socketRef.current.id,
+      name: profile?.name,
+      profileUrl: profile?.profileUrl,
+    };
+    socketRef.current.emit("join-room", dataJoin, roomId);
     socketRef.current.on("receive-message", (message) => {
       setMessages((messages) => [...messages, message]);
     });
+    socketRef.current.on("person-joined", (message) => {
+      setMessages((messages) => [...messages, message]);
+    });
     socketRef.current.on("typing-event", (data) => {
-      console.log("typing on");
       setTyping(data);
     });
 
