@@ -10,7 +10,7 @@ export default function Home() {
   const { profile } = useContext(AvatarContext);
 
   return (
-    <div className=" flex h-screen home items-center justify-center">
+    <div className="flex h-screen home items-center justify-center">
       <div className="container w-7/10 rounded flex">
         <div className="home-img w-4/10">
           <Profile />

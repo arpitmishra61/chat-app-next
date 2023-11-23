@@ -3,10 +3,27 @@ import React, { useState } from "react";
 import AvatarContext from "../Context/AvatarContext";
 
 export default function AvatarProvider({ children }) {
-  const [profile, setProfile] = useState({
-    name: "Anonymous",
-    profileUrl: "avatar-0",
-  });
+  const getProfileDetails = () => {
+    if (typeof localStorage !== "undefined") {
+      const profileData = JSON.parse(
+        localStorage?.getItem?.("profile") || "null"
+      );
+      if (profileData) {
+        return profileData;
+      } else {
+        return {
+          name: "Anonymous",
+          profileUrl: "avatar-0",
+        };
+      }
+    } else {
+      return {
+        name: "Anonymous",
+        profileUrl: "avatar-0",
+      };
+    }
+  };
+  const [profile, setProfile] = useState(getProfileDetails);
   const profileData = {
     profile,
     setProfile,

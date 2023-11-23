@@ -20,6 +20,13 @@ const getAvatars = (profile, setProfile) => {
               ...profile,
               profileUrl: `avatar-${i}`,
             }));
+            localStorage.setItem(
+              "profile",
+              JSON.stringify({
+                ...profile,
+                profileUrl: `avatar-${i}`,
+              })
+            );
           }}
         />
       </div>
@@ -29,10 +36,11 @@ const getAvatars = (profile, setProfile) => {
 };
 export default function AvatarsSelector() {
   const { profile, setProfile } = useContext(AvatarContext);
+  console.log(profile);
   return (
     <div className="mt-12">
       <h3 className="text-2xl">Select Your Avatar</h3>
-      <div className="flex justify-between w-100 mt-1 p-5 mb-4 flex-wrap">
+      <div className="flex justify-between w-100 mt-1 p-5 mb-4 flex-wrap avatar-main">
         {getAvatars(profile, setProfile)}
       </div>
     </div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import AvatarsSelector from "@/Components/AvatarsSelector";
 import AvatarContext from "@/Context/AvatarContext";
 import Link from "next/link";
@@ -7,6 +7,9 @@ import Link from "next/link";
 export default function Page() {
   const { profile, setProfile } = useContext(AvatarContext);
   const inputRef = useRef();
+  useEffect(() => {
+    localStorage.setItem("profile", JSON.stringify(profile));
+  }, [profile.name]);
 
   return (
     <div className="rounded profile-page flex justify-center items-center h-screen">
