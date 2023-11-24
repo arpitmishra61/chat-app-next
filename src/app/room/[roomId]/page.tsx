@@ -3,7 +3,7 @@ import Room from "@/Components/Room";
 import Profile from "@/Components/Profile";
 import { useState } from "react";
 
-export default function layout() {
+export default function RoomMainPage() {
   const [allowed, setAllowed] = useState(false);
 
   if (allowed) return <Room />;
