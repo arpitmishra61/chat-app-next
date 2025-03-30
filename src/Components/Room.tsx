@@ -8,6 +8,7 @@ import AvatarContext from "@/Context/AvatarContext";
 import FilePreview from "./FilePreview";
 import Image from "next/image";
 import imageCompression from "browser-image-compression";
+import TopBar from "./TopBar";
 
 export default function Room() {
   async function getImgData() {
@@ -140,6 +141,7 @@ export default function Room() {
   }, [messages]);
   return (
     <div className="room w-4/5 m-auto">
+      <TopBar />
       <div className="chat-screen">
         {Boolean(filePreview?.url) && <FilePreview filePreview={filePreview} />}
         {!Boolean(filePreview.url) && (

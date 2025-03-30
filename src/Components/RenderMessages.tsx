@@ -2,7 +2,6 @@
 import React from "react";
 import Image from "next/image";
 export default function RenderMessages({ messages, userId, typing }) {
-  console.log(typing);
 
   return !messages?.length ? (
     <div
