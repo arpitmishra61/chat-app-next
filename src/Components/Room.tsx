@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, { useEffect, useRef, useState, useContext, useId } from "react";
 
 import { io } from "socket.io-client";
 import RenderMessages from "./RenderMessages";
@@ -10,7 +10,7 @@ import Image from "next/image";
 import imageCompression from "browser-image-compression";
 import TopBar from "./TopBar";
 
-export default function Room() {
+export default function Room({ messagesFromStorage }: { messagesFromStorage: any[] }) {
   async function getImgData() {
     const files = fileRef.current.files[0];
     if (files) {
@@ -41,12 +41,14 @@ export default function Room() {
       name: profile?.name,
       profileUrl: profile?.profileUrl,
       imageUrl: filePreview.url,
+      userId: profile.userId
     };
     const typeMessage = {
       id: socketRef.current.id,
       name: profile?.name,
       profileUrl: profile?.profileUrl,
       value: false,
+      userId: profile.userId
     };
 
     socketRef.current.emit("message", message, roomId);
@@ -56,10 +58,11 @@ export default function Room() {
     setfilePreview({ url: "" });
   };
 
+
   const { roomId } = useParams();
   const messageRef: any = useRef("");
   const fileRef: any = useRef("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(messagesFromStorage || []);
   const [filePreview, setfilePreview] = useState({ url: "" });
   const [typing, setTyping] = useState(false);
   let socketRef: any = useRef("");
@@ -77,10 +80,12 @@ export default function Room() {
       id: socketRef.current.id,
       name: profile?.name,
       profileUrl: profile?.profileUrl,
+      profileId: profile?.userId
     };
     socketRef.current.emit("join-room", dataJoin, roomId);
     socketRef.current.on("receive-message", (message) => {
       setMessages((messages) => [...messages, message]);
+
     });
     socketRef.current.on("person-joined", (message) => {
       setMessages((messages) => [...messages, message]);
@@ -125,6 +130,12 @@ export default function Room() {
   }, []);
 
   useEffect(() => {
+    if (messages.length) {
+      localStorage.setItem("messages", JSON.stringify(messages))
+    }
+  }, [messages])
+
+  useEffect(() => {
     if (messages?.length) {
       const chatScreen: any = document.querySelector(".chat-screen");
 
@@ -135,7 +146,7 @@ export default function Room() {
         0,
         chatScreen.scrollHeight + +paddingBottom?.replace("px", "")
       );
-      if (messages[messages.length - 1].id === socketRef.current.id)
+      if (messages[messages.length - 1].userId === profile.userId)
         messageRef.current.value = "";
     }
   }, [messages]);
@@ -147,7 +158,7 @@ export default function Room() {
         {!Boolean(filePreview.url) && (
           <RenderMessages
             messages={messages}
-            userId={socketRef.current.id}
+            userId={profile?.userId}
             typing={typing}
           />
         )}
@@ -169,6 +180,13 @@ export default function Room() {
               onChange={() => {
                 getImgData();
               }}
+            />
+            <Image
+              src={require(`images/avatars/mic.png`)}
+              alt="file"
+              width={32}
+              height={32}
+              className="mic-icon"
             />
             <Image
               src={require(`images/avatars/send-file.png`)}
@@ -196,6 +214,7 @@ export default function Room() {
                 stroke-linejoin="round"
               ></path>
             </svg>
+
           </div>
         </div>
       </div>

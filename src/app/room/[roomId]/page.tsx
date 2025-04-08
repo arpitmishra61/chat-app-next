@@ -1,12 +1,31 @@
 "use client";
 import Room from "@/Components/Room";
 import Profile from "@/Components/Profile";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+function getFromStorage() {
+  try {
+    if (typeof window === 'undefined') {
+      return []
+    }
+    const messages = JSON.parse(localStorage.getItem("messages"))
+    if (Array.isArray(messages)) {
+      return messages
+    }
+    return []
 
+  }
+  catch (err) {
+    console.log(err)
+    return []
+  }
+
+}
 export default function RoomMainPage() {
   const [allowed, setAllowed] = useState(false);
+  const messages = useRef(getFromStorage());
 
-  if (allowed) return <Room />;
+
+  if (allowed || messages.current.length) return <Room messagesFromStorage={messages.current} />;
   else
     return (
       <div className="room-profile">

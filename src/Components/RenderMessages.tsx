@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+const getIsCurrentUser = (userId, userIdFromMessage) => userId === userIdFromMessage
 export default function RenderMessages({ messages, userId, typing }) {
 
   return !messages?.length ? (
@@ -14,11 +15,12 @@ export default function RenderMessages({ messages, userId, typing }) {
   ) : (
     <div className="p-4">
       {messages.map((message, i) => {
-        const flexJustify = message.id === userId ? "msg-end" : "msg-start";
+        const isCurrentUser = getIsCurrentUser(message.userId, userId)
+        const flexJustify = isCurrentUser ? "msg-end" : "msg-start";
 
-        const bg = message.id === userId ? "white" : "purple";
-        const nameText = message.id === userId ? "purple" : "white";
-        const text = message.id === userId ? "black" : "white";
+        const bg = isCurrentUser ? "white" : "purple";
+        const nameText = isCurrentUser ? "purple" : "white";
+        const text = isCurrentUser ? "black" : "white";
         return (
           <div className={`flex ${flexJustify}`} key={i}>
             <div
