@@ -19,22 +19,23 @@ export default function AvatarProvider({ children }) {
           profileUrl: "avatar-0",
         };
       }
+      let userId = localStorage.getItem("user-id")
+      if (userId) {
+        profileData.userId = userId
+      }
+
+
+      // Generate a unique UUID
+      userId = uuidv4();
+      profileData.userId = userId
+      localStorage.setItem("user-id", userId)
     } else {
       profileData = {
         name: "Anonymous",
         profileUrl: "avatar-0",
       };
     }
-    let userId = localStorage.getItem("user-id")
-    if (userId) {
-      profileData.userId = userId
-    }
 
-
-    // Generate a unique UUID
-    userId = uuidv4();
-    profileData.userId = userId
-    localStorage.setItem("user-id", userId)
     return profileData
   };
   const [profile, setProfile] = useState(getProfileDetails);
