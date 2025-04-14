@@ -1,16 +1,18 @@
 import React from 'react'
-import ShareButton from "../images/avatars/share.png"
 import Image from "next/image";
 
-export default function TopBar() {
+import { useParams } from 'next/navigation';
+
+export default function TopBar({ setMessages }) {
+    const { roomId } = useParams();
     return (
-        <div className='top-bar'>
+        <div className='top-bar flex'>
             <Image
                 src={require(`images/avatars/share.png`)}
                 alt="share"
                 width={32}
                 height={32}
-                className="share-icon"
+                className="share-icon mr-4"
                 onClick={async () => {
                     if (navigator.share) {
                         try {
@@ -25,6 +27,18 @@ export default function TopBar() {
                     } else {
                         alert('Web Share API is not supported in this browser.');
                     }
+                }}
+
+            />
+            <Image
+                src={require(`images/avatars/trash-bin.png`)}
+                alt="share"
+                width={32}
+                height={32}
+                className="share-icon"
+                onClick={() => {
+                    localStorage.removeItem(`messages-${roomId}`)
+                    setMessages([])
                 }}
 
             />

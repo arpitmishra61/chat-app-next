@@ -22,7 +22,9 @@ export default function RenderMessages({ messages, userId, typing }) {
         const nameText = isCurrentUser ? "purple" : "white";
         const text = isCurrentUser ? "black" : "white";
         return (
-          <div className={`flex ${flexJustify}`} key={i}>
+          <div className={`flex ${flexJustify}`} key={i} onClick={() => {
+
+          }}>
             <div
               className={`bg-${bg}-700 text-${text} p-3 my-4 rounded message relative`}
             >

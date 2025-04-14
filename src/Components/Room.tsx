@@ -131,7 +131,7 @@ export default function Room({ messagesFromStorage }: { messagesFromStorage: any
 
   useEffect(() => {
     if (messages.length) {
-      localStorage.setItem("messages", JSON.stringify(messages))
+      localStorage.setItem(`messages-${roomId}`, JSON.stringify(messages))
     }
   }, [messages])
 
@@ -152,7 +152,7 @@ export default function Room({ messagesFromStorage }: { messagesFromStorage: any
   }, [messages]);
   return (
     <div className="room w-4/5 m-auto">
-      <TopBar />
+      <TopBar setMessages={setMessages} />
       <div className="chat-screen">
         {Boolean(filePreview?.url) && <FilePreview filePreview={filePreview} />}
         {!Boolean(filePreview.url) && (

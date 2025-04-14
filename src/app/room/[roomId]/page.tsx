@@ -1,13 +1,14 @@
 "use client";
 import Room from "@/Components/Room";
 import Profile from "@/Components/Profile";
-import { useState, useRef, useEffect } from "react";
-function getFromStorage() {
+import { useState, useRef } from "react";
+import { useParams } from "next/navigation";
+function getFromStorage(roomId) {
   try {
     if (typeof window === 'undefined') {
       return []
     }
-    const messages = JSON.parse(localStorage.getItem("messages"))
+    const messages = JSON.parse(localStorage.getItem(`messages-${roomId}`))
     if (Array.isArray(messages)) {
       return messages
     }
@@ -22,7 +23,8 @@ function getFromStorage() {
 }
 export default function RoomMainPage() {
   const [allowed, setAllowed] = useState(false);
-  const messages = useRef(getFromStorage());
+  const { roomId } = useParams()
+  const messages = useRef(getFromStorage(roomId));
 
 
   if (allowed || messages.current.length) return <Room messagesFromStorage={messages.current} />;
