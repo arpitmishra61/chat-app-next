@@ -29,7 +29,12 @@ export default function AvatarProvider({ children }) {
         localStorage.setItem("user-id", userId)
 
       }
-
+    }
+    else {
+      profileData = {
+        name: "Anonymous",
+        profileUrl: "avatar-0",
+      };
     }
 
     return profileData
