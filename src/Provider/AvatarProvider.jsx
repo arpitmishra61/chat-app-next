@@ -23,17 +23,13 @@ export default function AvatarProvider({ children }) {
       if (userId) {
         profileData.userId = userId
       }
+      else {
+        userId = uuidv4();
+        profileData.userId = userId
+        localStorage.setItem("user-id", userId)
 
+      }
 
-      // Generate a unique UUID
-      userId = uuidv4();
-      profileData.userId = userId
-      localStorage.setItem("user-id", userId)
-    } else {
-      profileData = {
-        name: "Anonymous",
-        profileUrl: "avatar-0",
-      };
     }
 
     return profileData
